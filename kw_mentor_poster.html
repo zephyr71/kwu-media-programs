@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>멘토를 찾아서 학생이 간다! — 광운대 미디어커뮤니케이션학부</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kw-brown:   #8B2C2C;   /* KwangWoon Brown (red-ish brown) */
+    --kw-dark:    #5A1A1A;
+    --kw-light:   #C94040;
+    --kw-cream:   #FFF5ED;
+    --kw-gold:    #F5A623;
+    --kw-gold2:   #FFD166;
+    --kw-sky:     #06B6D4;
+    --kw-mint:    #10B981;
+    --white:      #FFFFFF;
+    --off-white:  #FDF8F5;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #1a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 16px;
+  }
+
+  .poster {
+    width: 680px;
+    background: var(--off-white);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    position: relative;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--kw-brown);
+    padding: 44px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Diagonal stripe decoration */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* Animated diagonal lines */
+  .stripe {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .stripe-line {
+    position: absolute;
+    width: 2px;
+    height: 200%;
+    background: rgba(255,255,255,0.04);
+    transform-origin: top left;
+    transform: rotate(30deg);
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  .stripe-line:nth-child(1) { left: 10%; animation-delay: 0s; }
+  .stripe-line:nth-child(2) { left: 25%; animation-delay: 0.8s; }
+  .stripe-line:nth-child(3) { left: 55%; animation-delay: 1.6s; }
+  .stripe-line:nth-child(4) { left: 80%; animation-delay: 2.4s; }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--kw-gold);
+    color: #3a1a00;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .hero-tag .dot {
+    width: 7px; height: 7px;
+    background: #3a1a00;
+    border-radius: 50%;
+    animation: pulse 1.5s ease infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.4)} }
+
+  .hero-program-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .hero-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 58px;
+    line-height: 1.05;
+    color: var(--white);
+    position: relative; z-index: 2;
+    animation: fadeUp 0.6s ease 0.15s both;
+  }
+  .hero-title .em1 { color: var(--kw-gold); }
+  .hero-title .em2 { color: var(--kw-gold2); }
+
+  .hero-sub {
+    margin-top: 16px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.65;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.6s ease 0.2s both;
+    max-width: 440px;
+  }
+
+  /* KW wordmark */
+  .kw-wordmark {
+    position: absolute;
+    bottom: 20px; right: 40px;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 90px;
+    color: rgba(255,255,255,0.05);
+    letter-spacing: -4px;
+    line-height: 1;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ── BODY ── */
+  .body {
+    padding: 36px 44px 40px;
+  }
+
+  /* Key info chips */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease 0.25s both;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .chip-red   { background: var(--kw-brown); color: white; }
+  .chip-gold  { background: var(--kw-gold);  color: #3a1a00; }
+  .chip-sky   { background: var(--kw-sky);   color: white; }
+  .chip-mint  { background: var(--kw-mint);  color: white; }
+  .chip-icon { font-size: 16px; }
+
+  /* Section title */
+  .sec-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 20px;
+    color: var(--kw-brown);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sec-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--kw-brown), transparent);
+    border-radius: 2px;
+  }
+
+  /* How-to card */
+  .howto-card {
+    background: white;
+    border-radius: 18px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    border: 1.5px solid #f0e4e4;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #f0e0e0;
+    transition: background 0.2s;
+  }
+  .step-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-row:first-child { padding-top: 0; }
+  .step-num {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--kw-brown);
+    color: white;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content { font-size: 14px; color: #444; line-height: 1.6; }
+  .step-content strong { color: var(--kw-dark); }
+
+  /* Two-col grid */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.35s both;
+  }
+
+  .info-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 20px;
+    border: 1.5px solid #f0e4e4;
+  }
+  .info-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--kw-brown);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .info-card-value {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 18px;
+    color: var(--kw-dark);
+    line-height: 1.3;
+  }
+  .info-card-sub {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* Support money */
+  .money-card {
+    background: linear-gradient(135deg, var(--kw-brown), var(--kw-light));
+    border-radius: 18px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+  .money-item {
+    flex: 1;
+    text-align: center;
+  }
+  .money-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+  }
+  .money-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .money-amount {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 26px;
+    color: var(--kw-gold);
+    line-height: 1;
+  }
+  .money-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+
+  /* Prize */
+  .prize-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFF8E7;
+    border: 2px solid var(--kw-gold);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.42s both;
+  }
+  .prize-icon { font-size: 32px; }
+  .prize-text { font-size: 14px; color: #5a3a00; line-height: 1.5; }
+  .prize-text strong { font-size: 18px; font-family: 'Black Han Sans', sans-serif; color: #8B5000; }
+
+  /* Docs list */
+  .docs-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 22px;
+    border: 1.5px solid #f0e4e4;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.44s both;
+  }
+  .doc-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: #555;
+    padding: 6px 0;
+    border-bottom: 1px dashed #f0e0e0;
+  }
+  .doc-item:last-child { border-bottom: none; }
+  .doc-bullet {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--kw-brown);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    animation: fadeUp 0.6s ease 0.48s both;
+  }
+  .cta-main {
+    flex: 1;
+    background: var(--kw-brown);
+    border-radius: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(139,44,44,0.3);
+    text-decoration: none;
+  }
+  .cta-main:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(139,44,44,0.45);
+  }
+  .cta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .cta-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cta-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 19px;
+    color: white;
+    line-height: 1.2;
+  }
+  .cta-arrow {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: white;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .cta-main:hover .cta-arrow { transform: translateX(4px); }
+  .cta-deadline {
+    font-size: 12px;
+    color: var(--kw-gold);
+    margin-top: 8px;
+    font-weight: 700;
+  }
+
+  .cta-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cta-mini {
+    background: white;
+    border: 1.5px solid #f0e4e4;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--kw-dark);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .cta-mini:hover { background: var(--kw-cream); }
+  .cta-mini-icon { font-size: 18px; }
+
+  /* Footer */
+  .footer {
+    background: var(--kw-dark);
+    padding: 16px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeUp 0.6s ease 0.52s both;
+  }
+  .footer-kw {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.5px;
+  }
+  .footer-kw span { color: var(--kw-gold); }
+  .footer-email {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="stripe">
+      <div class="stripe-line"></div>
+      <div class="stripe-line"></div>
+      <div class="stripe-line"></div>
+      <div class="stripe-line"></div>
+    </div>
+    <div class="kw-wordmark">KW</div>
+
+    <div class="hero-tag">
+      <div class="dot"></div>
+      광운대학교 미디어커뮤니케이션학부
+    </div>
+    <div class="hero-program-label">2026 Mentoring Program</div>
+    <div class="hero-title">
+      <span class="em1">멘토</span>를<br>
+      <span class="em2">찾아서</span><br>
+      학생이 간다!
+    </div>
+    <div class="hero-sub">
+      학생이 직접 관련 분야 선배나 전문가를 찾아가<br>
+      현장 멘토링을 받는 <strong style="color:white">진로·취업 탐색 프로그램</strong>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Key chips -->
+    <div class="chips">
+      <div class="chip chip-red"><span class="chip-icon">📅</span>3월 30일 ~ 5월 1일</div>
+      <div class="chip chip-gold"><span class="chip-icon">👥</span>팀 2~4명</div>
+      <div class="chip chip-sky"><span class="chip-icon">🏆</span>10팀 선정</div>
+      <div class="chip chip-mint"><span class="chip-icon">⏰</span>마감 3월 29일</div>
+    </div>
+
+    <!-- 방식 -->
+    <div class="sec-title">🚀 참여 방식</div>
+    <div class="howto-card">
+      <div class="steps">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-content"><strong>멘토 직접 섭외</strong> — 관심 분야 선배·전문가를 직접 발굴 및 섭외<br>
+          <span style="font-size:12px;color:#aaa">매칭 어려울 경우 지도교수와 상의 가능</span></div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-content"><strong>팀 구성 및 신청</strong> — 직접 구성한 2~4인 팀으로 지원서 제출</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-content"><strong>멘토 상담 진행</strong> — 멘토 근무지 방문 및 상담 (3/30 ~ 5/1)</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div class="step-content"><strong>서류 제출</strong> — 상담 후 필수 서류 일체 제출 (매칭 후 안내)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 지원금 -->
+    <div class="sec-title">💰 지원금</div>
+    <div class="money-card">
+      <div class="money-item">
+        <div class="money-label">전문가 자문비</div>
+        <div class="money-amount">18~22만원</div>
+        <div class="money-desc">팀당 지급</div>
+      </div>
+      <div class="money-divider"></div>
+      <div class="money-item">
+        <div class="money-label">다과비</div>
+        <div class="money-amount">5천원</div>
+        <div class="money-desc">1인당 지급</div>
+      </div>
+    </div>
+
+    <!-- 상금 -->
+    <div class="prize-row">
+      <div class="prize-icon">🥇</div>
+      <div class="prize-text">
+        우수 자문 내용 작성 팀에게<br>
+        <strong>상금 10만원 상품권</strong> 수여 (1팀 선정)
+      </div>
+    </div>
+
+    <!-- 필수 서류 -->
+    <div class="sec-title">📋 멘토 상담 후 제출 서류</div>
+    <div class="docs-card">
+      <div class="doc-item"><div class="doc-bullet"></div>자문료 지급 내역서</div>
+      <div class="doc-item"><div class="doc-bullet"></div>멘토 이력서</div>
+      <div class="doc-item"><div class="doc-bullet"></div>자문 내용 및 상담 사진</div>
+      <div class="doc-item"><div class="doc-bullet"></div>영수증 등 관련 증빙</div>
+      <div class="doc-item" style="color:#aaa;font-size:12px"><div class="doc-bullet" style="background:#ccc"></div>※ 상세 안내는 매칭 후 별도 안내 예정</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="sec-title">📨 지원 방법</div>
+    <div class="cta-row">
+      <div class="cta-main" onclick="window.open('mailto:kwmedia@kw.ac.kr','_blank')">
+        <div class="cta-label">지원서 제출</div>
+        <div class="cta-top">
+          <div class="cta-title">kwmedia@kw.ac.kr<br>로 이메일 접수</div>
+          <div class="cta-arrow">→</div>
+        </div>
+        <div class="cta-deadline">⏰ 제출 기한: 2026년 3월 29일(일)</div>
+      </div>
+      <div class="cta-side">
+        <div class="cta-mini">
+          <div class="cta-mini-icon">📎</div>
+          지원서 (첨부파일 참조)
+        </div>
+        <div class="cta-mini" onclick="window.open('mailto:kwmedia@kw.ac.kr','_blank')">
+          <div class="cta-mini-icon">❓</div>
+          문의 동일 이메일
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-kw">KWANGWOON UNIV. <span>미디어커뮤니케이션학부</span></div>
+    <div class="footer-email">kwmedia@kw.ac.kr</div>
+  </div>
+
+</div>
+</body>
+</html>
