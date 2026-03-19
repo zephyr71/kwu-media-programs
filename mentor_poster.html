@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>멘토를 찾아서 학생이 간다!</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFD600;
+    --orange: #FF6B2B;
+    --pink: #FF3D8B;
+    --blue: #1A73FF;
+    --mint: #00D4B4;
+    --purple: #8B2FFF;
+    --dark: #111111;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .poster {
+    width: 640px;
+    min-height: 900px;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+  }
+
+  /* Animated background blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.25;
+    animation: float 6s ease-in-out infinite;
+  }
+  .blob-1 { width: 320px; height: 320px; background: var(--pink); top: -80px; left: -80px; animation-delay: 0s; }
+  .blob-2 { width: 280px; height: 280px; background: var(--blue); top: 200px; right: -60px; animation-delay: 2s; }
+  .blob-3 { width: 260px; height: 260px; background: var(--mint); bottom: 200px; left: -40px; animation-delay: 4s; }
+  .blob-4 { width: 200px; height: 200px; background: var(--yellow); bottom: -60px; right: 40px; animation-delay: 1s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+
+  .content {
+    position: relative;
+    z-index: 10;
+    padding: 48px 44px 44px;
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--yellow);
+    color: var(--dark);
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 8px 18px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: slideDown 0.6s ease forwards;
+  }
+  .badge-dot {
+    width: 8px; height: 8px;
+    background: var(--dark);
+    border-radius: 50%;
+    animation: blink 1.2s ease infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Title */
+  .title-block {
+    margin-bottom: 32px;
+    animation: slideUp 0.7s ease 0.1s both;
+  }
+  .title-main {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 52px;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .title-main .highlight-yellow { color: var(--yellow); }
+  .title-main .highlight-pink { color: var(--pink); }
+  .title-main .highlight-mint { color: var(--mint); }
+  .title-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 12px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Cards row */
+  .cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+    animation: slideUp 0.7s ease 0.2s both;
+  }
+  .card {
+    border-radius: 18px;
+    padding: 24px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-orange {
+    background: var(--orange);
+    grid-column: 1 / 3;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .card-blue { background: var(--blue); }
+  .card-purple { background: var(--purple); }
+
+  .card-icon {
+    font-size: 36px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-value {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .card-value-small {
+    font-size: 16px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Program Description */
+  .desc-block {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 26px 26px;
+    margin-bottom: 20px;
+    animation: slideUp 0.7s ease 0.3s both;
+  }
+  .desc-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 18px;
+    color: var(--mint);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .desc-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.75;
+  }
+
+  /* Steps */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    animation: slideUp 0.7s ease 0.35s both;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
+    padding: 14px 18px;
+    transition: background 0.2s;
+  }
+  .step:hover { background: rgba(255,255,255,0.09); }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .step-num-1 { background: var(--pink); color: white; }
+  .step-num-2 { background: var(--yellow); color: var(--dark); }
+  .step-num-3 { background: var(--mint); color: var(--dark); }
+  .step-num-4 { background: var(--blue); color: white; }
+  .step-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+  }
+  .step-text strong { color: white; }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    border-radius: 18px;
+    padding: 26px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideUp 0.7s ease 0.4s both;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(255,61,139,0.35);
+  }
+  .cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(255,61,139,0.5);
+  }
+  .cta-text { font-family: 'Black Han Sans', sans-serif; font-size: 22px; color: white; }
+  .cta-sub { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+  .cta-arrow {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    transition: transform 0.2s;
+  }
+  .cta:hover .cta-arrow { transform: translateX(4px); }
+
+  /* Footer */
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    animation: slideUp 0.7s ease 0.45s both;
+  }
+  .footer-logo {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+  }
+
+  /* Floating decorations */
+  .deco {
+    position: absolute;
+    font-size: 80px;
+    opacity: 0.04;
+    font-family: 'Black Han Sans', sans-serif;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .deco-1 { top: 20px; right: 10px; transform: rotate(15deg); }
+  .deco-2 { bottom: 80px; left: 0px; transform: rotate(-10deg); font-size: 60px; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="poster">
+  <!-- Background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+
+  <!-- Decorative text -->
+  <div class="deco deco-1">멘토</div>
+  <div class="deco deco-2">GO!</div>
+
+  <div class="content">
+
+    <!-- Badge -->
+    <div class="badge">
+      <div class="badge-dot"></div>
+      광운대학교 미디어커뮤니케이션학부
+    </div>
+
+    <!-- Title -->
+    <div class="title-block">
+      <div class="title-main">
+        <span class="highlight-yellow">멘토</span>를<br>
+        <span class="highlight-pink">찾아서</span><br>
+        학생이 <span class="highlight-mint">간다!</span>
+      </div>
+      <div class="title-sub">
+        진로·취업 탐색을 위한 현장 멘토링 프로그램
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards-row">
+      <div class="card card-orange">
+        <div class="card-icon">🚀</div>
+        <div>
+          <div class="card-label">Program</div>
+          <div class="card-value">학생 주도형<br>현장 멘토링</div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon" style="font-size:28px">🎯</div>
+        <div>
+          <div class="card-label">대상</div>
+          <div class="card-value card-value-small">미디어커뮤니케이션<br>학부 재학생</div>
+        </div>
+      </div>
+      <div class="card card-purple">
+        <div class="card-icon" style="font-size:28px">💡</div>
+        <div>
+          <div class="card-label">혜택</div>
+          <div class="card-value card-value-small">현직자 네트워크<br>진로 인사이트</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Program Description -->
+    <div class="desc-block">
+      <div class="desc-title">📌 프로그램 소개</div>
+      <div class="desc-text">
+        학생이 <strong style="color:white">직접</strong> 관련 분야의 선배 또는 전문가를 찾아가<br>
+        현장 멘토링을 받는 프로그램입니다.<br>
+        진로 고민부터 취업 전략까지, 나만의 로드맵을 그려보세요!
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+      <div class="step">
+        <div class="step-num step-num-1">1</div>
+        <div class="step-text"><strong>멘토 탐색</strong> — 관심 분야의 선배·전문가를 직접 발굴</div>
+      </div>
+      <div class="step">
+        <div class="step-num step-num-2">2</div>
+        <div class="step-text"><strong>사전 신청</strong> — 학과 사무실 또는 담당 교수에게 접수</div>
+      </div>
+      <div class="step">
+        <div class="step-num step-num-3">3</div>
+        <div class="step-text"><strong>현장 방문</strong> — 멘토 근무지·사업장 직접 방문 및 면담</div>
+      </div>
+      <div class="step">
+        <div class="step-num step-num-4">4</div>
+        <div class="step-text"><strong>결과 보고</strong> — 멘토링 내용 정리 후 학과 제출</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <div>
+        <div class="cta-text">지금 바로 참여하세요!</div>
+        <div class="cta-sub">학과 사무실 또는 담당 교수에게 문의</div>
+      </div>
+      <div class="cta-arrow">→</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-logo">KWANGWOON UNIVERSITY · MEDIA & COMMUNICATION</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
