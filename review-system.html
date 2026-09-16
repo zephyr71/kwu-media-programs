@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투고량 급증에 따른 심사 시스템 변경 (안)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #e0e0e0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero .subtitle {
+    font-size: 1rem;
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .hero .badge {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    background: rgba(255,210,0,0.15);
+    color: #ffd200;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Tab navigation */
+  .tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  .tab-btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,0.15); }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #1a1a2e;
+    font-weight: 600;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards */
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+
+  .card-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+  .card-number.n1 { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #1a1a2e; }
+  .card-number.n2 { background: linear-gradient(135deg, #fa709a, #fee140); color: #1a1a2e; }
+  .card-number.n3 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); color: #1a1a2e; }
+
+  .card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .card p, .card li {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: #bbb;
+  }
+  .card ul, .card ol {
+    padding-left: 20px;
+    margin-top: 8px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .status-agreed { background: rgba(67,233,123,0.2); color: #43e97b; }
+  .status-ready { background: rgba(250,112,154,0.2); color: #fa709a; }
+  .status-new { background: rgba(161,140,209,0.2); color: #c4b5fd; }
+
+  /* Flow steps */
+  .flow-container { position: relative; padding-left: 40px; }
+  .flow-step {
+    position: relative;
+    margin-bottom: 28px;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
+    border-left: 3px solid;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .flow-step:hover { background: rgba(255,255,255,0.09); }
+  .flow-step::before {
+    content: attr(data-step);
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: -27px;
+    top: calc(50% + 14px);
+    width: 2px;
+    height: calc(100% + 2px);
+    background: rgba(255,255,255,0.15);
+  }
+  .flow-step.s1 { border-color: #43e97b; }
+  .flow-step.s1::before { background: #43e97b; }
+  .flow-step.s2 { border-color: #38f9d7; }
+  .flow-step.s2::before { background: #38f9d7; }
+  .flow-step.s3 { border-color: #fa709a; }
+  .flow-step.s3::before { background: #fa709a; }
+  .flow-step.s4 { border-color: #fee140; }
+  .flow-step.s4::before { background: #fee140; }
+  .flow-step.s5 { border-color: #a18cd1; }
+  .flow-step.s5::before { background: #a18cd1; }
+
+  .flow-step .role {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .flow-step.s1 .role { color: #43e97b; }
+  .flow-step.s2 .role { color: #38f9d7; }
+  .flow-step.s3 .role { color: #fa709a; }
+  .flow-step.s4 .role { color: #fee140; }
+  .flow-step.s5 .role { color: #a18cd1; }
+
+  .flow-step h4 { font-size: 1rem; color: #fff; margin-bottom: 6px; }
+  .flow-step p { font-size: 0.88rem; color: #aaa; line-height: 1.7; }
+
+  .flow-detail {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.85rem;
+    color: #999;
+    line-height: 1.7;
+  }
+  .flow-step.expanded .flow-detail { display: block; }
+
+  /* Desk reject reasons */
+  .reason-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .reason-item {
+    padding: 16px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s;
+  }
+  .reason-item:hover {
+    border-color: rgba(161,140,209,0.4);
+    background: rgba(161,140,209,0.08);
+  }
+  .reason-item .reason-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #a18cd1;
+    margin-bottom: 6px;
+  }
+  .reason-item .reason-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 4px;
+  }
+  .reason-item .reason-desc {
+    font-size: 0.82rem;
+    color: #999;
+    line-height: 1.6;
+  }
+
+  /* Current rules */
+  .rule-item {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 3px solid rgba(255,210,0,0.4);
+    font-size: 0.88rem;
+    color: #bbb;
+    line-height: 1.7;
+  }
+  .note-box {
+    margin-top: 20px;
+    padding: 18px;
+    background: rgba(250,112,154,0.08);
+    border: 1px solid rgba(250,112,154,0.2);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #ccc;
+    line-height: 1.7;
+  }
+  .note-box strong { color: #fa709a; }
+
+  /* Summary section */
+  .summary-card {
+    background: linear-gradient(135deg, rgba(247,151,30,0.1), rgba(255,210,0,0.1));
+    border: 1px solid rgba(255,210,0,0.25);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .summary-card h3 {
+    color: #ffd200;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .summary-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .summary-icon {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .si1 { background: #43e97b; }
+  .si2 { background: #fa709a; }
+  .si3 { background: #a18cd1; }
+  .summary-text { font-size: 0.9rem; color: #ccc; line-height: 1.7; }
+  .summary-text strong { color: #fff; }
+
+  .goal-box {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
+    margin-top: 20px;
+  }
+  .goal-box p {
+    font-size: 1rem;
+    color: #ffd200;
+    font-weight: 500;
+    line-height: 1.7;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.5rem; }
+    .tab-btn { padding: 8px 14px; font-size: 0.82rem; }
+    .card { padding: 20px; }
+    .reason-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>투고량 급증에 따른<br>심사 시스템 변경 (안)</h1>
+  <p class="subtitle">최근 논문 투고량이 기존 대비 약 <strong style="color:#ffd200">두 배</strong> 수준으로 급증함에 따라,<br>심사의 효율성을 높이고 업무 부담을 완화하기 위한 세 가지 대안을 제시합니다.</p>
+  <div class="badge">부위원장님의 의견과 동의를 구합니다</div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="proposals">3가지 제안</button>
+  <button class="tab-btn" data-tab="reasons">데스크 리젝 사유</button>
+  <button class="tab-btn" data-tab="flow">운영 모델 (5단계)</button>
+  <button class="tab-btn" data-tab="rules">현재 규정</button>
+  <button class="tab-btn" data-tab="summary">요약</button>
+</div>
+
+<div class="container">
+
+  <!-- TAB: 3가지 제안 -->
+  <div class="tab-content active" id="proposals">
+    <div class="card">
+      <div class="card-number n1">1</div>
+      <span class="status-badge status-agreed">합의 완료</span>
+      <h3>심사위원 수 축소 (3인 &rarr; 2인)</h3>
+      <p>지난 회의에서 동의해 주신 사항으로, 현재 학술지 위원회에서 이사회 제출을 위한 규정 개정 작업을 진행 중입니다. 심사위원 2인 전환은 합의가 완료되었으므로, <strong style="color:#43e97b">이사회에서 통과되는 즉시 시행</strong>될 예정입니다.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-number n2">2</div>
+      <span class="status-badge status-ready">즉시 시행 가능</span>
+      <h3>투고 규정 위반 논문에 대한 반려 강화</h3>
+      <p>익명화 미흡, 분량 초과, 참고문헌 양식 오류, 필수 서류 누락 등 투고 규정을 충족하지 않은 논문에 대해서는 <strong style="color:#fa709a">심사 전 단계에서 반려 조치를 강화</strong>합니다.</p>
+      <ul style="margin-top:12px">
+        <li>편집간사 검토를 통해 규정 위반 사항 확인 시 논문 반려</li>
+        <li>보완 후 투고 마감일까지 재투고 가능</li>
+        <li>마감일 경과 시 차기 호에 재투고</li>
+        <li><strong style="color:#fee140">70권 6호 논문 모집부터 바로 시행 가능</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-number n3">3</div>
+      <span class="status-badge status-new">신규 도입</span>
+      <h3>데스크 리젝(Desk Reject) 제도의 실질적 운용</h3>
+      <p>학술적 기여도와 품질, 방법론적 타당성 등에 문제가 있는 경우 <strong style="color:#c4b5fd">심사 전 편집진 단계에서 투고 및 심사 부적격 판정</strong>을 내리는 제도입니다.</p>
+      <ul style="margin-top:12px">
+        <li>데스크 리젝된 논문은 본 저널에 재투고 불가</li>
+        <li>부위원장 자율 선택 방식 &rarr; <strong style="color:#c4b5fd">편집진이 논문을 할당/배정하는 방식</strong>으로 전환</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: 데스크 리젝 사유 -->
+  <div class="tab-content" id="reasons">
+    <div class="card">
+      <h3>주요 데스크 리젝 사유</h3>
+      <p style="margin-bottom:4px">아래 사유에 한정하지 않고, 구체적인 판단은 논문의 특성을 종합적으로 고려하여 이루어질 수 있습니다.</p>
+    </div>
+    <div class="reason-grid">
+      <div class="reason-item">
+        <div class="reason-num">01</div>
+        <div class="reason-title">학술적 기여도 미흡</div>
+        <div class="reason-desc">본 저널의 출판 기준을 충족할 만한 이론적/실무적 기여가 명확하지 않은 경우</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">02</div>
+        <div class="reason-title">방법론적 결함</div>
+        <div class="reason-desc">자료 수집, 표본 구성, 연구 설계, 분석 기법 등에 중대한 한계가 있는 경우</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">03</div>
+        <div class="reason-title">참신성 부족</div>
+        <div class="reason-desc">선행연구의 단순 반복이나 제한적인 확장에 그쳐 새로운 학술적 지식이나 통찰을 제시하지 못하는 경우</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">04</div>
+        <div class="reason-title">논리적 일관성 부족</div>
+        <div class="reason-desc">연구 문제, 이론적 논의, 연구 방법, 분석 결과 및 논의 간의 논리적/유기적 연계가 충분하지 않은 경우</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">05</div>
+        <div class="reason-title">분석 및 논의의 피상성</div>
+        <div class="reason-desc">깊이 있는 학술적 해석 없이 단순한 현상 기술이나 결과 보고에 머무르는 경우</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">06</div>
+        <div class="reason-title">기타</div>
+        <div class="reason-desc">그 밖에 편집위원회가 심사 진행이 적절하지 않다고 판단할 만한 타당한 사유가 있는 경우</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: 운영 모델 -->
+  <div class="tab-content" id="flow">
+    <div class="card" style="margin-bottom:28px">
+      <h3>데스크 리젝 운영 모델 (안)</h3>
+      <p>각 단계를 클릭하면 상세 내용을 확인할 수 있습니다.</p>
+    </div>
+    <div class="flow-container">
+      <div class="flow-step s1" data-step="1" onclick="this.classList.toggle('expanded')">
+        <div class="role">편집간사</div>
+        <h4>1단계: 형식 요건 검토 및 반려</h4>
+        <p>투고된 논문 전체를 대상으로 형식 요건을 확인합니다.</p>
+        <div class="flow-detail">
+          <p><strong>검토 항목:</strong> 투고 규정 준수 여부, 저자 정보 익명화 여부, 논문 분량, 필수 서류 제출 여부, 유사도 검사 결과 등</p>
+          <p style="margin-top:8px"><strong>조치:</strong> 요건 미달 시 심사 프로세스 진입 전 즉시 반려 (형식 수정 후 재투고 가능하지만 당호 재투고 불가)</p>
+        </div>
+      </div>
+
+      <div class="flow-step s2" data-step="2" onclick="this.classList.toggle('expanded')">
+        <div class="role">편집위원장 / 편집이사</div>
+        <h4>2단계: 논문 할당</h4>
+        <p>1단계를 통과한 논문을 부위원장에게 배정합니다.</p>
+        <div class="flow-detail">
+          <p>논문 주제를 검토하여 각 부위원장의 전공 및 전문성을 고려해 논문을 배정합니다.</p>
+          <p style="margin-top:8px"><strong>핵심 변경:</strong> 기존 부위원장 자율 선택제를 폐지하여 미선택 논문 발생 및 배정 지연을 차단합니다.</p>
+        </div>
+      </div>
+
+      <div class="flow-step s3" data-step="3" onclick="this.classList.toggle('expanded')">
+        <div class="role">부위원장</div>
+        <h4>3단계: 데스크 리젝 여부 판단 및 사유 건의</h4>
+        <p>배정받은 논문의 질적 수준을 정밀 검토합니다.</p>
+        <div class="flow-detail">
+          <p>논문의 학술적 기여도, 방법론적 타당성 등을 검토합니다.</p>
+          <p style="margin-top:8px">본심사 진행이 부적절하다고 판단할 경우, 편집위원 섭외를 진행하지 않고 <strong>구체적인 데스크 리젝 사유를 작성하여 편집위원장에게 전달</strong>합니다.</p>
+        </div>
+      </div>
+
+      <div class="flow-step s4" data-step="4" onclick="this.classList.toggle('expanded')">
+        <div class="role">편집위원장</div>
+        <h4>4단계: 데스크 리젝 최종 확정 및 통보</h4>
+        <p>부위원장이 건의한 데스크 리젝을 최종 확정합니다.</p>
+        <div class="flow-detail">
+          <p>전달받은 사유를 검토하여 데스크 리젝을 최종 확정합니다.</p>
+          <p style="margin-top:8px"><strong>부위원장 보호:</strong> 저자 대상 결과 통보는 편집위원장 명의로 발송하며, 부위원장의 성명은 공개되지 않습니다.</p>
+        </div>
+      </div>
+
+      <div class="flow-step s5" data-step="5" onclick="this.classList.toggle('expanded')">
+        <div class="role">동료 심사</div>
+        <h4>5단계: 동료 심사 진행 (Peer Review)</h4>
+        <p>이후 과정은 기존과 동일하게 진행됩니다.</p>
+        <div class="flow-detail">
+          <p>데스크 리젝 과정을 통과한 논문에 대해 기존 심사 절차대로 동료 심사를 진행합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: 현재 규정 -->
+  <div class="tab-content" id="rules">
+    <div class="card">
+      <h3>현재 규정 - 심사 대상에서 제외하는 논문</h3>
+    </div>
+    <div class="rule-item">
+      <strong>1.</strong> 기존에 발표된 논문, 혹은 이와 실질적으로 유사한 논문. 단, 학회의 제반 행사에서 발표된 논문은 다른 학술논문집에 게재하지 않았다면 심사 대상에서 제외하지 않는다.
+    </div>
+    <div class="rule-item">
+      <strong>2.</strong> 영리단체로부터 지원을 받아 행한 연구논문 (학술재단은 제외).
+    </div>
+    <div class="rule-item">
+      <strong>3.</strong> 총 원고의 분량이 200자 원고지 200매를 초과하는 논문 (표, 그림, 참고문헌 포함). 단, 표, 그림의 경우는 세로 1cm당 70자로 계산함.
+    </div>
+    <div class="rule-item">
+      <strong>4.</strong> 학술적 논문의 성격을 갖추지 않았거나 본 학술지가 지향하는 학술적 방향과 부합하지 않는 논문. 단, 특별기고논문 / 국제학술대회 발표논문 / 기획초청논문은 편집위원회의 논의를 거쳐 게재할 수 있다.
+    </div>
+
+    <div class="note-box">
+      <p><strong>참고 1:</strong> 투고 논문 분량을 심사료와 연결시키려던 제안은 학술지 위원회에서 받아들여지지 않았습니다. 따라서 현재 규정대로 진행됩니다.</p>
+      <p style="margin-top:10px"><strong>참고 2:</strong> 현재 [저자점검표]에는 규정보다 일부 완화된 기준(영문초록, 참고문헌, 부록 미포함)으로 공지되고 있습니다. 초심 투고 논문의 분량은 200자 원고지 200매를 초과할 수 없으며, 국문초록/본문/표/그림을 포함하여 200매 이하로 작성해야 합니다. (재심 투고의 경우 분량 무관)</p>
+    </div>
+  </div>
+
+  <!-- TAB: 요약 -->
+  <div class="tab-content" id="summary">
+    <div class="summary-card">
+      <h3>핵심 요약</h3>
+      <div class="summary-item">
+        <div class="summary-icon si1">1</div>
+        <div class="summary-text"><strong>심사위원 수 축소 (3인 &rarr; 2인)</strong><br>규정 개정 후 이사회 통과 즉시 시행. 심사 위원 섭외 및 관리 부담을 직접적으로 줄여줍니다.</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon si2">2</div>
+        <div class="summary-text"><strong>투고 규정 위반 논문 반려 강화</strong><br>형식 요건 미달 논문을 심사 전 단계에서 즉시 반려하여 불필요한 심사 자원 낭비를 원천 차단합니다.</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-icon si3">3</div>
+        <div class="summary-text"><strong>데스크 리젝 제도의 실질적 운용</strong><br>질적 수준이 미달하는 논문을 본심사 전 걸러내어 부위원장의 심사위원 섭외 업무를 대폭 간소화합니다.</div>
+      </div>
+    </div>
+    <div class="goal-box">
+      <p>본 제안의 핵심 목표는 논문 투고량 급증에 따른<br><strong>부위원장님들의 과도한 업무 부담을 실질적으로 경감</strong>하는 데 있습니다.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
