@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>편집위원회 매뉴얼</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;500;700;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0071E3}a:hover{color:#0058B0}
+</style>
+</helmet>
+<div style="width: 1080px; height: 7940px; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; display: flex; flex-direction: column">
+
+<!-- 1 TITLE -->
+<div style="height: 700px; box-sizing: border-box; background: #000000; color: #F5F5F7; padding: 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 36px">
+<div style="font-size: 22px; font-weight: 300; letter-spacing: 0.2em; color: #A1A1A6">한국언론학보 편집위원회 · 2026년 10월</div>
+<h1 style="margin: 0; font-size: 132px; font-weight: 900; line-height: 1.1; letter-spacing: -0.03em">편집위원회<br>매뉴얼</h1>
+<div style="font-size: 36px; font-weight: 300; color: {{accent}}">꼭 기억하실 여섯 가지.</div>
+</div>
+
+<!-- 2 SUMMARY -->
+<div style="height: 700px; box-sizing: border-box; background: #F5F5F7; color: #1D1D1F; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">요약</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">여섯 가지.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 64px 280px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 24px; font-weight: 100; color: #6E6E73">1</span>
+<span style="font-size: 26px; font-weight: 700">운영위원회</span>
+<span style="font-size: 19px; font-weight: 300; color: #6E6E73; line-height: 1.5">실제 심의·의결을 편집운영위원회가 맡습니다.</span>
+</div>
+<div style="display: grid; grid-template-columns: 64px 280px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 24px; font-weight: 100; color: #6E6E73">2</span>
+<span style="font-size: 26px; font-weight: 700">데스크 리젝션</span>
+<span style="font-size: 19px; font-weight: 300; color: #6E6E73; line-height: 1.5">모든 투고 논문을 사전 검토합니다.</span>
+</div>
+<div style="display: grid; grid-template-columns: 64px 280px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 24px; font-weight: 100; color: #6E6E73">3</span>
+<span style="font-size: 26px; font-weight: 700">반려 강화</span>
+<span style="font-size: 19px; font-weight: 300; color: #6E6E73; line-height: 1.5">필수 서류·양식이 미비하면 접수하지 않습니다.</span>
+</div>
+<div style="display: grid; grid-template-columns: 64px 280px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 24px; font-weight: 100; color: #6E6E73">4</span>
+<span style="font-size: 26px; font-weight: 700">2인 심사 · 정성 평가</span>
+<span style="font-size: 19px; font-weight: 300; color: #6E6E73; line-height: 1.5">두 의견을 참고해 정성적으로 판정합니다.</span>
+</div>
+<div style="display: grid; grid-template-columns: 64px 280px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 24px; font-weight: 100; color: #6E6E73">5</span>
+<span style="font-size: 26px; font-weight: 700">AI 관리</span>
+<span style="font-size: 19px; font-weight: 300; color: #6E6E73; line-height: 1.5">편집위원도 같은 기준을 지킵니다.</span>
+</div>
+<div style="display: grid; grid-template-columns: 64px 280px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid #D2D2D7; border-bottom: 1px solid #D2D2D7">
+<span style="font-size: 24px; font-weight: 100; color: #6E6E73">6</span>
+<span style="font-size: 26px; font-weight: 700">이의신청 · 윤리 회부</span>
+<span style="font-size: 19px; font-weight: 300; color: #6E6E73; line-height: 1.5">윤리 위반은 학보가 판정하지 않고 회부합니다.</span>
+</div>
+</div>
+</div>
+
+<!-- 3 ROLES -->
+<div style="height: 680px; box-sizing: border-box; background: #000000; color: #F5F5F7; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">역할 분담</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">네 개의 자리.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 240px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #424245">
+<span style="font-size: 28px; font-weight: 700">편집위원장</span>
+<span style="font-size: 19px; font-weight: 300; color: #A1A1A6; line-height: 1.6">편집·심사·발간 총괄, 최종 결정권. 데스크 리젝션 승인, 심사위원 선정, 이의신청 회부, 이사회 보고.</span>
+</div>
+<div style="display: grid; grid-template-columns: 240px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #424245">
+<span style="font-size: 28px; font-weight: 700">부편집위원장</span>
+<span style="font-size: 19px; font-weight: 300; color: #A1A1A6; line-height: 1.6">소관 분야 논문 관리. 사전 검토와 데스크 리젝션 건의. 심사 의견이 엇갈릴 때 최종 판정.</span>
+</div>
+<div style="display: grid; grid-template-columns: 240px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #424245">
+<span style="font-size: 28px; font-weight: 700">편집이사</span>
+<span style="font-size: 19px; font-weight: 300; color: #A1A1A6; line-height: 1.6">발간 일정 관리, 투고·심사·출판 실무, 심사서 원문 등 증빙자료 작성과 보관.</span>
+</div>
+<div style="display: grid; grid-template-columns: 240px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #424245; border-bottom: 1px solid #424245">
+<span style="font-size: 28px; font-weight: 700">편집간사</span>
+<span style="font-size: 19px; font-weight: 300; color: #A1A1A6; line-height: 1.6">운영위원회 의결사항 기록, 재정 보고서 작성.</span>
+</div>
+</div>
+</div>
+
+<!-- 4 FLOW -->
+<div style="height: 800px; box-sizing: border-box; background: #F5F5F7; color: #1D1D1F; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">전체 흐름</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">접수에서 발간까지.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">1</span><span style="font-size: 24px; font-weight: 700">투고 접수</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">형식 요건 점검. 미비하면 반려.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">2</span><span style="font-size: 24px; font-weight: 700">사전 검토</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">배정된 논문을 부편집위원장이 검토.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">3</span><span style="font-size: 24px; font-weight: 700">부적합</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">편집위원장 승인 후 데스크 리젝션. 탈락률에 산입.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">4</span><span style="font-size: 24px; font-weight: 700">통과</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">본심사 회부 확정.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">5</span><span style="font-size: 24px; font-weight: 700">심사위원 2인 선정</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">편집위원 추천, 편집위원장 선정.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">6</span><span style="font-size: 24px; font-weight: 700">익명 심사</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">4단계로 판정.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">7</span><span style="font-size: 24px; font-weight: 700">판정</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">두 의견을 참고해 정성적으로 판정.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">8</span><span style="font-size: 24px; font-weight: 700">이의신청</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">들어오면 운영위원회가 심의.</span>
+</div>
+<div style="display: grid; grid-template-columns: 56px 280px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #D2D2D7; border-bottom: 1px solid #D2D2D7">
+<span style="font-size: 22px; font-weight: 100; color: #6E6E73">9</span><span style="font-size: 24px; font-weight: 700">게재 확정 · 발행</span><span style="font-size: 18px; font-weight: 300; color: #6E6E73">교열 후 짝수 달 말일 발행, 7일 이내 KCI 등록.</span>
+</div>
+</div>
+</div>
+
+<!-- 5 RETURN -->
+<div style="height: 740px; box-sizing: border-box; background: #000000; color: #F5F5F7; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">접수 단계 점검표</div>
+<div style="font-size: 64px; font-weight: 900; line-height: 1.2; letter-spacing: -0.03em">미비하면 반려.<br>예외는 하나.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">연구윤리 준수 동의</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">KCI 문헌 유사도 검사 결과지</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">저작권 이용·이양 동의서</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">저자 정보를 삭제한 심사용 원고</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">특수관계인 저자의 확인서와 기여도 증빙 (해당 시)</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">AI 활용 공개 (해당 시)</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245"><span style="font-size: 20px; font-weight: 900">반려</span><span style="font-size: 21px; font-weight: 300">논문작성지침 양식 준수 (참고문헌, 초록 등)</span></div>
+<div style="display: grid; grid-template-columns: 100px 1fr; align-items: baseline; padding: 12px 0; border-top: 1px solid #424245; border-bottom: 1px solid #424245"><span style="font-size: 20px; font-weight: 900; color: {{accent}}">결정</span><span style="font-size: 21px; font-weight: 500">분량 초심 원고지 200매 이하 · 운영위원회가 심사 진행 여부 결정</span></div>
+</div>
+<div style="font-size: 18px; font-weight: 300; line-height: 1.6; color: #A1A1A6">반려 시점이 투고 기간을 지났으면 차기호로 이월됩니다.</div>
+</div>
+
+<!-- 6 DESK REJECTION -->
+<div style="height: 840px; box-sizing: border-box; background: #F5F5F7; color: #1D1D1F; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">데스크 리젝션</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">사유 기록이 곧 정당성.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid #D2D2D7"><span style="font-size: 22px; font-weight: 100; color: #6E6E73">1</span><span style="font-size: 22px; font-weight: 300; line-height: 1.5">부편집위원장이 학보 주제와의 부합성, 학술적 완성도를 사전 검토</span></div>
+<div style="display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid #D2D2D7"><span style="font-size: 22px; font-weight: 100; color: #6E6E73">2</span><span style="font-size: 22px; font-weight: 300; line-height: 1.5">부적합이면 편집위원장에게 건의</span></div>
+<div style="display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid #D2D2D7"><span style="font-size: 22px; font-weight: 100; color: #6E6E73">3</span><span style="font-size: 22px; font-weight: 300; line-height: 1.5">편집위원장 승인 후 투고자에게 본심사 미회부 통보</span></div>
+<div style="display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid #D2D2D7"><span style="font-size: 22px; font-weight: 100; color: #6E6E73">4</span><span style="font-size: 22px; font-weight: 300; line-height: 1.5">시스템에서 두 사람을 심사위원으로 지정, 각자 부적합 사유를 의견서에 기록</span></div>
+<div style="display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 14px 0; border-top: 1px solid #D2D2D7; border-bottom: 1px solid #D2D2D7"><span style="font-size: 22px; font-weight: 100; color: #6E6E73">5</span><span style="font-size: 22px; font-weight: 300; line-height: 1.5">논문탈락률과 투고 다양성 모수에 산입</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 30px; font-weight: 700">2~5문장, 구체적으로.</div>
+<div style="font-size: 20px; font-weight: 300; line-height: 1.7; color: #6E6E73">해당하는 기준과 구체적 근거를 남기세요. “학보 수준에 미달” 같은 추상적인 한 문장으로 끝내지 않습니다.</div>
+</div>
+</div>
+
+<!-- 7 DECISION -->
+<div style="height: 640px; box-sizing: border-box; background: #000000; color: #F5F5F7; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">심사위원 선정과 판정</div>
+<div style="font-size: 64px; font-weight: 900; line-height: 1.2; letter-spacing: -0.03em">두 의견,<br>하나의 기록.</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; font-size: 24px; font-weight: 300; line-height: 1.5">
+<div><span style="color: {{accent}}; font-weight: 700">1 </span>두 심사 의견의 핵심 쟁점 요약</div>
+<div><span style="color: {{accent}}; font-weight: 700">2 </span>어떤 의견에 더 비중을 두었고, 그 이유</div>
+<div><span style="color: {{accent}}; font-weight: 700">3 </span>최종 판정과 저자에게 전달할 수정 요구</div>
+</div>
+<div style="font-size: 18px; font-weight: 300; line-height: 1.7; color: #A1A1A6">이 기록은 이의신청 심의와 재단 평가의 증빙입니다. 심사위원은 2인, 같은 기관 소속은 배제하며, 요청 메일에 AI 입력 금지를 반드시 적고 매뉴얼을 함께 보냅니다.</div>
+</div>
+
+<!-- 8 APPEAL -->
+<div style="height: 560px; box-sizing: border-box; background: #F5F5F7; color: #1D1D1F; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">이의신청 심의</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">다섯 걸음.</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; font-size: 22px; font-weight: 300; line-height: 1.5">
+<div><span style="font-weight: 700">1 </span>저자가 공식 서면으로 이의 제기</div>
+<div><span style="font-weight: 700">2 </span>편집위원장이 운영위원회에 회부</div>
+<div><span style="font-weight: 700">3 </span>초심·재심에 관여하지 않은 분야 전문가가 추가 심의</div>
+<div><span style="font-weight: 700">4 </span>기존 판정 유지 또는 특별 재심 회부</div>
+<div><span style="font-weight: 700">5 </span>편집간사가 의결 내용 기록</div>
+</div>
+</div>
+
+<!-- 9 ETHICS -->
+<div style="height: 520px; box-sizing: border-box; background: #000000; color: #F5F5F7; padding: 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 24px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">연구윤리 사안</div>
+<div style="font-size: 88px; font-weight: 900; line-height: 1.15; letter-spacing: -0.03em">판정하지 않고<br>회부한다.</div>
+<div style="font-size: 22px; font-weight: 300; line-height: 1.7; color: #A1A1A6">제보 접수 → 심사 중단 → 학회 연구윤리위원회 회부.<br>AI를 악용한 위조·변조가 확인되면 심사 중단 또는 게재 철회.</div>
+</div>
+
+<!-- 10 AI -->
+<div style="height: 620px; box-sizing: border-box; background: #F5F5F7; color: #1D1D1F; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">AI 관련 운영 기준</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">모두에게 같은 기준.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 160px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #D2D2D7"><span style="font-size: 26px; font-weight: 700">저자</span><span style="font-size: 20px; font-weight: 300; line-height: 1.6">AI는 저자가 될 수 없음. 실질적 활용은 공개, 결과의 책임은 저자. 단순 문법·문체 교정은 고지 면제.</span></div>
+<div style="display: grid; grid-template-columns: 160px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #D2D2D7"><span style="font-size: 26px; font-weight: 700">심사위원</span><span style="font-size: 20px; font-weight: 300; line-height: 1.6">논문을 AI에 입력 금지(본인 심사평 윤문만 예외). 요청 메일과 매뉴얼로 안내하고 확약서를 받음.</span></div>
+<div style="display: grid; grid-template-columns: 160px 1fr; align-items: baseline; padding: 18px 0; border-top: 1px solid #D2D2D7; border-bottom: 1px solid #D2D2D7"><span style="font-size: 26px; font-weight: 700">편집위원</span><span style="font-size: 20px; font-weight: 300; line-height: 1.6">데스크 리젝션 시 심사위원으로 지정되므로 같은 기준 적용. 운영위원이 스스로 준수.</span></div>
+</div>
+</div>
+
+<!-- 11 FOUNDATION -->
+<div style="height: 700px; box-sizing: border-box; background: #000000; color: #F5F5F7; padding: 80px; display: flex; flex-direction: column; justify-content: center; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: {{accent}}">재단 평가 대응 체크리스트</div>
+<div style="font-size: 64px; font-weight: 900; letter-spacing: -0.03em">편집이사의 일곱 항목.</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">정시성</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6">짝수 달 말일 발행, 7일 이내 KCI 등록</span></div>
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">투고 다양성</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6; line-height: 1.5">교신저자 소속기관 기준 같은 기관 비율 40% 이하</span></div>
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">논문탈락률</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6">데스크 리젝션 산입</span></div>
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">일자 표기</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6">최초 투고일, 게재 확정일, 최종 수정일</span></div>
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">저작권</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6">동의서 확보, KJCI 등록, 원문 무상 공개</span></div>
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">증빙 보관</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6; line-height: 1.5">심사서 원문, 데스크 리젝션 의견서, 이의신청 의결, 게재 연기·취소 기록</span></div>
+<div style="display: grid; grid-template-columns: 200px 1fr; align-items: baseline; padding: 13px 0; border-top: 1px solid #424245; border-bottom: 1px solid #424245"><span style="font-size: 22px; font-weight: 700">편집위원 구성</span><span style="font-size: 18px; font-weight: 300; color: #A1A1A6">3분의 1 이상을 외부 소속 전문가로</span></div>
+</div>
+</div>
+
+<!-- 12 CLOSING -->
+<div style="height: 440px; box-sizing: border-box; background: #F5F5F7; color: #1D1D1F; padding: 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 24px">
+<div style="font-size: 72px; font-weight: 900; line-height: 1.2; letter-spacing: -0.03em">판단은 전문가가,<br>근거는 기록으로.</div>
+<div style="font-size: 18px; font-weight: 300; letter-spacing: 0.2em; color: #6E6E73; margin-top: 16px">한국언론학보 편집위원회</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#0A6CDB","options":["#0A6CDB","#C2410C","#15803D"]},"$preview":{"width":1080,"height":7940}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#0A6CDB' };
+}
+}
+</script>
+</body>
+</html>
