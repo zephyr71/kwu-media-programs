@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국언론학보 편집위원회 매뉴얼 인포그래픽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            color: #555;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        /* 투고부터 발간까지 플로우 */
+        .flow-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .flow-step.desk {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .flow-step.review {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .flow-step.final {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .flow-step h3 {
+            font-size: 0.95em;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        
+        .flow-step p {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+        
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #3498db;
+        }
+        
+        /* 역할 분담 테이블 */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .role-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .role-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .role-card ul {
+            list-style: none;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .role-card li:before {
+            content: "✓ ";
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* 체크리스트 */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .checklist-item {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .checklist-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .checklist-item p {
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        /* AI 기준 */
+        .ai-section {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .ai-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .ai-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffc107;
+        }
+        
+        .ai-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        
+        .ai-item p {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        /* 통계 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>한국언론학보 편집위원회 매뉴얼</h1>
+            <p>투고부터 발간까지의 전체 프로세스 가이드</p>
+        </header>
+        
+        <!-- 투고부터 발간까지 흐름 -->
+        <div class="section">
+            <h2>📋 투고부터 발간까지의 전체 흐름</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; align-items: center;">
+                <div class="flow-step">
+                    <h3>1단계</h3>
+                    <p>투고 접수<br><small>형식 요건 점검</small></p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step">
+                    <h3>2단계</h3>
+                    <p>사전 검토<br><small>부편집위원장</small></p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step desk">
+                    <h3>3단계</h3>
+                    <p>데스크 리젝션<br><small>또는 본심사 회부</small></p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step review">
+                    <h3>4단계</h3>
+                    <p>심사위원 선정<br><small>2인 익명 심사</small></p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step review">
+                    <h3>5단계</h3>
+                    <p>정성적 판정<br><small>부편집위원장</small></p>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step final">
+                    <h3>6단계</h3>
+                    <p>게재 확정<br><small>교열 및 발행</small></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 역할 분담 -->
+        <div class="section">
+            <h2>👥 역할 분담</h2>
+            <div class="roles-grid">
+                <div class="role-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h3>📌 편집위원장</h3>
+                    <ul>
+                        <li>편집/심사/발간 총괄</li>
+                        <li>게재 여부 최종 결정</li>
+                        <li>데스크 리젝션 승인</li>
+                        <li>심사위원 선정</li>
+                    </ul>
+                </div>
+                <div class="role-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h3>👔 부편집위원장</h3>
+                    <ul>
+                        <li>소관 분야 투고 논문 관리</li>
+                        <li>사전 검토 수행</li>
+                        <li>데스크 리젝션 건의</li>
+                        <li>심사 의견 대립 시 정성적 판정</li>
+                    </ul>
+                </div>
+                <div class="role-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h3>🔧 편집이사</h3>
+                    <ul>
+                        <li>발간 일정 관리</li>
+                        <li>투고·심사·출판 실무</li>
+                        <li>심사서 원문 보관</li>
+                        <li>재단 평가 대응</li>
+                    </ul>
+                </div>
+                <div class="role-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <h3>📝 편집간사</h3>
+                    <ul>
+                        <li>운영위원회 의결 기록</li>
+                        <li>재정 보고서 작성</li>
+                        <li>행정 업무 지원</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 투고 요건 -->
+        <div class="section">
+            <h2>✅ 투고 접수 시 필수 요건</h2>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <strong>연구윤리 준수 동의</strong>
+                    <p>미비 시: 반려</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>KCI 문헌 유사도 검사 결과지</strong>
+                    <p>미비 시: 반려</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>저작권 이용·이양 동의서</strong>
+                    <p>미비 시: 반려</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>저자 정보 삭제 심사용 원고</strong>
+                    <p>미비 시: 반려</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>분량 (초심 원고지 200매 이하)</strong>
+                    <p>초과 시: 운영위원회 심의</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>특수관계인 확인서 및 기여도 증빙</strong>
+                    <p>미비 시: 반려</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>AI 활용 공개 (해당 시)</strong>
+                    <p>미비 시: 반려</p>
+                </div>
+                <div class="checklist-item">
+                    <strong>IRB 승인 정보 (해당 시)</strong>
+                    <p>2년 유예, 이후 의무</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 데스크 리젝션 -->
+        <div class="section">
+            <h2>🚫 데스크 리젝션 판단 기준</h2>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 5px solid #e74c3c;">
+                <p style="margin-bottom: 15px; color: #2c3e50; font-weight: 600;">부편집위원장이 다음 중 하나에 해당하면 편집위원장에게 데스크 리젝션을 건의합니다:</p>
+                <ul style="list-style-position: inside; line-height: 2;">
+                    <li>언론학/커뮤니케이션학의 학술적 문제의식과 무관한 논문</li>
+                    <li>연구문제·이론·방법 사이의 정합성 부재</li>
+                    <li>선행연구 검토가 형식에 그쳐 학술적 기여를 확인 불가</li>
+                    <li>연구 설계나 분석에 본심사로도 고치기 어려운 결함</li>
+                    <li>AI 생성 의심, 확인 안 되는 인용, 의심 데이터</li>
+                    <li>이중 투고 논문</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 2인 익명 심사 -->
+        <div class="section">
+            <h2>🔍 2인 익명 심사 원칙</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="background: #e8f4f8; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db;">
+                    <h3 style="color: #2c3e50; margin-bottom: 10px;">💯 정성적 평가</h3>
+                    <p>점수표에 의존하지 않고 심사위원과 편집위원의 전문적 판단을 존중합니다.</p>
+                </div>
+                <div style="background: #e8f4f8; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db;">
+                    <h3 style="color: #2c3e50; margin-bottom: 10px;">🔐 익명 원칙</h3>
+                    <p>저자와 심사위원 모두 서로의 신원을 공개하지 않습니다.</p>
+                </div>
+                <div style="background: #e8f4f8; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db;">
+                    <h3 style="color: #2c3e50; margin-bottom: 10px;">⚖️ 이해충돌 배제</h3>
+                    <p>같은 기관 소속, 공동연구, 지도 관계 등 이해관계 심사자 제외.</p>
+                </div>
+                <div style="background: #e8f4f8; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db;">
+                    <h3 style="color: #2c3e50; margin-bottom: 10px;">🤝 대립 시 판정</h3>
+                    <p>두 심사 의견이 엇갈리면 부편집위원장이 종합해 최종 판정합니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI 운영 기준 -->
+        <div class="section">
+            <h2>🤖 AI 관련 운영 기준</h2>
+            <div style="background: #fff3cd; padding: 25px; border-radius: 8px; border-left: 5px solid #ffc107;">
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #856404; margin-bottom: 15px; font-size: 1.2em;">저자</h3>
+                    <ul style="list-style-position: inside; line-height: 1.8; color: #333;">
+                        <li><strong>AI는 저자가 될 수 없습니다.</strong></li>
+                        <li>실질적 AI 활용 시 공개 의무</li>
+                        <li>단순 문법/철자 교정만으로는 공개 면제</li>
+                        <li>결과에 대한 책임은 저자가 져야 합니다.</li>
+                    </ul>
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #856404; margin-bottom: 15px; font-size: 1.2em;">심사위원</h3>
+                    <ul style="list-style-position: inside; line-height: 1.8; color: #333;">
+                        <li><strong>논문을 AI에 입력 금지</strong></li>
+                        <li>본인 심사평 윤문만 예외</li>
+                        <li>요청 메일과 매뉴얼로 안내</li>
+                        <li>확약서 징구</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #856404; margin-bottom: 15px; font-size: 1.2em;">편집위원</h3>
+                    <ul style="list-style-position: inside; line-height: 1.8; color: #333;">
+                        <li>데스크 리젝션 시 심사위원 지정</li>
+                        <li>심사위원과 같은 기준 적용</li>
+                        <li>운영위원 스스로 준수</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- IRB 의무 -->
+        <div class="section">
+            <h2>📋 IRB 승인 의무 (2년 유예)</h2>
+            <div style="background: #e8f8f5; padding: 20px; border-radius: 8px; border-left: 5px solid #16a085;">
+                <p style="margin-bottom: 15px; color: #1a5f4a; font-weight: 600;">생명윤리법 제15조 기준: 인간 대상 연구(설문, 실험, 인터뷰, 관찰)는 IRB 승인이 의무입니다.</p>
+                <div style="background: white; padding: 15px; border-radius: 5px; border-left: 3px solid #16a085;">
+                    <h4 style="color: #1a5f4a; margin-bottom: 10px;">유예기간(현재)에 할 일:</h4>
+                    <ul style="list-style-position: inside; line-height: 1.8;">
+                        <li>투고 시스템에 IRB 승인번호 입력란 추가 (선택 입력)</li>
+                        <li>인간 대상 연구에 승인 정보 없으면 안내 문구 발송</li>
+                        <li>공용 IRB 이용 방법 안내 (https://public.irb.or.kr/)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 핵심 통계 -->
+        <div class="section">
+            <h2>📊 주요 운영 지표</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">본심사 심사위원</div>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="stat-number">200</div>
+                    <div class="stat-label">초심 원고지 제한</div>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="stat-number">≤40%</div>
+                    <div class="stat-label">같은 기관 투고 비율</div>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <div class="stat-number">짝수월 말일</div>
+                    <div class="stat-label">정규 발행일</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 이의신청과 연구윤리 -->
+        <div class="section">
+            <h2>⚠️ 이의신청 및 연구윤리 처리</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="background: #fcf3cf; padding: 20px; border-radius: 8px; border-left: 5px solid #f39c12;">
+                    <h3 style="color: #7d6608; margin-bottom: 15px;">📬 이의신청 절차</h3>
+                    <ol style="list-style-position: inside; line-height: 2; color: #333;">
+                        <li>저자가 공식 서면으로 이의 제기</li>
+                        <li>편집위원장이 운영위원회에 회부</li>
+                        <li>분야 전문가가 추가 심의</li>
+                        <li>기존 판정 유지 또는 특별 재심</li>
+                    </ol>
+                </div>
+                <div style="background: #fadbd8; padding: 20px; border-radius: 8px; border-left: 5px solid #c0392b;">
+                    <h3 style="color: #78281f; margin-bottom: 15px;">🚨 연구윤리 위반</h3>
+                    <ul style="list-style-position: inside; line-height: 2; color: #333;">
+                        <li><strong>학보는 직접 판정 불가</strong></li>
+                        <li>학회 연구윤리위원회에 회부</li>
+                        <li>심사 중단 / 게재 철회 가능</li>
+                        <li>실명 제보 원칙</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 개정 배경 -->
+        <div class="section" style="background: #f0f8ff;">
+            <h2>💡 개정의 세 가지 원칙</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 5px solid #3498db;">
+                    <h3 style="color: #2c3e50;">1️⃣ 대외 학술 지침 준수</h3>
+                    <p style="color: #555; margin-top: 10px;">한국연구재단, 교육부, 국제출판윤리위원회(COPE) 가이드라인을 규정에 반영</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 5px solid #3498db;">
+                    <h3 style="color: #2c3e50;">2️⃣ 국제 표준 수립</h3>
+                    <p style="color: #555; margin-top: 10px;">사전 검토, 2인 익명 심사, AI 기준, 저작권 절차를 국제 주요 학술지 수준으로 정비</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 5px solid #3498db;">
+                    <h3 style="color: #2c3e50;">3️⃣ 자율적 운영</h3>
+                    <p style="color: #555; margin-top: 10px;">점수표 기계 판정 대신 심사위원과 편집위원의 전문적 판단 존중</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>한국언론학보 편집위원회 · 2026년 10월 · 이 인포그래픽은 「한국언론학보」 편집위원회 매뉴얼의 핵심 내용을 시각화한 것입니다.</p>
+        </footer>
+    </div>
+</body>
+</html>
